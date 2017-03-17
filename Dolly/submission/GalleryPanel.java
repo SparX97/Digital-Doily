@@ -92,6 +92,7 @@ public class GalleryPanel extends JPanel {
                     items[i] = null;
                     saves[i] = null;
                     File temp = new File(i + ".png");
+                    System.out.println("removing item: " + i);
                     temp.delete();
                     filledSpace--;
                     break;
