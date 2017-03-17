@@ -20,6 +20,7 @@ public class GalleryPanel extends JPanel {
 
 //    private DrawingPanel theDrawingPanel;
 
+    //on start, scans the folder for images to add in the gallery
     public GalleryPanel() {
         super();
 
@@ -50,6 +51,7 @@ public class GalleryPanel extends JPanel {
         }
     }
 
+    //makes a bufferedImage into an icon
     public ImageIcon convert(BufferedImage image){
         ImageIcon icon = new ImageIcon(image.getScaledInstance(80,75,Image.SCALE_SMOOTH));
         return icon;
@@ -71,13 +73,14 @@ public class GalleryPanel extends JPanel {
 //        }
 //    }
 
+    //creates png files and panels from them
     public void saveToFile(BufferedImage picture){
         if(filledSpace < memory){
             for (int i = 0; i< memory; i++) {
                 if(items[i] == null){
                     try {
-                        System.out.println("filledSpace right now: " + filledSpace);
-                        System.out.println("i right now: " + i);
+//                        System.out.println("filledSpace right now: " + filledSpace);
+//                        System.out.println("i right now: " + i);
                         ImageIO.write(picture,"PNG" , new File(i + ".png"));
                         saves[i] = picture;
                         items[i] = new GalleryItem(convert(picture), this, filledSpace);

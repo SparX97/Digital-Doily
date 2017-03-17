@@ -21,6 +21,7 @@ public class DigitalDolly {
     }
 }
 
+//handles panel creation
 class dollyFrame extends JFrame {
 
     public dollyFrame(String title) {

@@ -48,6 +48,9 @@ public class DrawingPanel extends JPanel {
 
     private GalleryPanel theGallery;
 
+    private Worker colorGenerator;
+    private boolean useWorker;
+
     public DrawingPanel(GalleryPanel galleryPanel){
         super();
         theGallery = galleryPanel;
@@ -73,6 +76,9 @@ public class DrawingPanel extends JPanel {
         isReflecting = false;
 
         saveNow = false;
+
+//        colorGenerator = new Worker(this);
+        useWorker = false;
 //        fileName = 0;
 
 //        panelImage = new BufferedImage(0,0,BufferedImage.TYPE_4BYTE_ABGR);
@@ -427,6 +433,52 @@ public class DrawingPanel extends JPanel {
     public void toggleReflections(){
         isReflecting = !isReflecting;
         repaint();
+    }
+
+    public void toggleRandomColors(){
+//        SwingWorker<Void, Void> colorGenerator;
+//        if(startOrStop) {
+//            SwingWorker<Void, Void> colorGenerator = new SwingWorker<Void, Void>() {
+//
+//                //call the process method every half a second
+//                @Override
+//                protected Void doInBackground() throws Exception {
+//                    while (true){
+//
+//                        process();
+//                        Thread.sleep(100);
+//                    }
+////                    return null;
+//                }
+//
+//                protected void process(){
+//
+//                    Random rand = new Random();
+//
+//                    float red = rand.nextFloat();
+//                    float green = rand.nextFloat();
+//                    float blue = rand.nextFloat();
+//
+//                    setColor(new Color(red, green, blue));
+//
+//                }
+//            };
+        useWorker = !useWorker;
+        if(useWorker) {
+            colorGenerator = new Worker(this);
+            colorGenerator.execute();
+        }
+        else
+            colorGenerator.cancel(true);
+//        }
+//        else {
+//            colorGenerator.cancel();
+//        }
+
+
+    }
+
+    private void process(Color color) {
     }
 
 //    private Ellipse2D.Float drawBrush(int x1, int y1, int brushStrokeWidth, int brushStrokeHeight)

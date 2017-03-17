@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.util.Hashtable;
 
 /**
@@ -13,6 +14,7 @@ public class CtrlPanel extends JPanel{
     private static Color penColor;
     private int sectors;
 
+
     public CtrlPanel(DrawingPanel canvas, GalleryPanel theGalleryPanel){
         super();
 //        setBackground(Color.BLACK);
@@ -21,38 +23,10 @@ public class CtrlPanel extends JPanel{
         myPen = drawingPane.getPen();
         penColor = drawingPane.getColor();
         sectors = drawingPane.getNumSectors();
+
         setLayout(new FlowLayout());
-//        setBackground(Color.cyan);
 
-        JPanel checkBox = new JPanel();
-        checkBox.setLayout(new GridLayout(2,1));
 
-        JCheckBox sectorsCheck = new JCheckBox("Show Sectors");
-        sectorsCheck.setSelected(true);
-        sectorsCheck.addItemListener(e -> {
-            drawingPane.toggleSectors();
-        });
-        checkBox.add(sectorsCheck);
-
-        JCheckBox reflect = new JCheckBox("Reflections");
-        reflect.addItemListener(e -> {
-            drawingPane.toggleReflections();
-        });
-        checkBox.add(reflect);
-
-        add(checkBox);
-
-        JButton undo = new JButton("Undo Last Step");
-        undo.addActionListener(e -> {
-            drawingPane.undo();
-        });
-        add(undo);
-
-        JButton clear = new JButton("Clear Display");
-        clear.addActionListener(e -> {
-            drawingPane.clearScreen();
-        });
-        add(clear);
 
 
         JSlider sectorSlider = new JSlider(1,60, sectors);
@@ -75,13 +49,63 @@ public class CtrlPanel extends JPanel{
 //        slider1.setBorder(BorderFactory.createTitledBorder("JSlider without Tick Marks"));
         sectorSlider.addChangeListener(e -> {
             if(360%sectorSlider.getValue() == 0)
-            sectors = sectorSlider.getValue();
+                sectors = sectorSlider.getValue();
             drawingPane.setNumSectors(sectors);
         });
 
+//        setBackground(Color.cyan);
+
+        JPanel checkBox = new JPanel();
+        checkBox.setLayout(new GridLayout(2,2));
+
+        JCheckBox maxSectors = new JCheckBox("360 Sectors");
+        maxSectors.addItemListener(e -> {
+            if(e.getStateChange() == ItemEvent.SELECTED)
+                drawingPane.setNumSectors(360);
+            else
+                drawingPane.setNumSectors(sectorSlider.getValue());
+        });
+        checkBox.add(maxSectors);
+
+        JCheckBox reflect = new JCheckBox("Reflections");
+        reflect.addItemListener(e -> {
+            drawingPane.toggleReflections();
+        });
+        checkBox.add(reflect);
+
+        JCheckBox randomColors = new JCheckBox("Crazy Colors");
+        randomColors.addItemListener(e -> {
+            drawingPane.toggleRandomColors();
+        });
+        checkBox.add(randomColors);
+
+        JCheckBox sectorsCheck = new JCheckBox("Show Sectors");
+        sectorsCheck.setSelected(true);
+        sectorsCheck.addItemListener(e -> {
+            drawingPane.toggleSectors();
+        });
+        checkBox.add(sectorsCheck);
+
+        add(checkBox);
+
+        JButton undo = new JButton("Undo Last Step");
+        undo.addActionListener(e -> {
+            drawingPane.undo();
+        });
+        add(undo);
+
+        JButton clear = new JButton("Clear Display");
+        clear.addActionListener(e -> {
+            drawingPane.clearScreen();
+        });
+        add(clear);
+
+
+
+
         add(sectorSlider);
 
-        JSlider penSlider = new JSlider(1,10,myPen);
+        JSlider penSlider = new JSlider(1,20,myPen);
         penSlider.setBorder(BorderFactory.createTitledBorder("Pen Diamerter"));
         penSlider.addChangeListener(e -> {
             myPen = penSlider.getValue();
@@ -98,6 +122,7 @@ public class CtrlPanel extends JPanel{
             drawingPane.setColor(newColor);
         });
         add(colorChoose);
+
 
         JButton save = new JButton("Save");
         save.addActionListener(e -> {
