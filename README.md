@@ -1,6 +1,6 @@
 # Digital-Doily
 
-<img src="./puzzle-solver-demo.gif">
+<img src="./doily-demo.gif">
 
 ## Description
 - Painting application with some quirks and features
@@ -16,8 +16,6 @@
 
 ## Additional Pictures
 
-<img src="./tile-swap-puzzle.jpg">
-<img src="./borad-with-obstacles.png">
-<img src="./general-example.png">
-<img src="./big-board.png">
-
+<img src="./many-zones.png">
+<img src="./reflection.png">
+<img src="./circle.png">
